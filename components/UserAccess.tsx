@@ -6,7 +6,7 @@ import { useState } from "react";
 export default function Index() {
   const [showButtons, setShowButtons] = useState(false);
   return (
-    <View style={{ padding: 20 }}>
+    <View style={{ padding: 20, width: 100 }}>
       <Pressable
         onPress={() => setShowButtons(!showButtons)}
         style={{
@@ -20,7 +20,14 @@ export default function Index() {
       </Pressable>
 
       {showButtons && (
-        <View style={{ display: "flex", flexDirection: "row", marginTop: 20 }}>
+        <View
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            marginTop: 20,
+            width: 300,
+          }}
+        >
           <Register />
           <Login />
         </View>

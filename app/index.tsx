@@ -1,10 +1,10 @@
 import { View } from "react-native";
-import UserAccess from "@/components/UserAccess";
+import HomePage from "@/components/HomePage";
 
 export default function Index() {
   return (
     <View style={{ padding: 20 }}>
-      <UserAccess />
+      <HomePage />
     </View>
   );
 }

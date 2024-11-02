@@ -45,5 +45,5 @@ app.use(registerRoute);
 // Porta
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`Server in ascolto su http://localhost:${PORT}`);
+  console.log(`Server in ascolto su porta: ${PORT}`);
 });
