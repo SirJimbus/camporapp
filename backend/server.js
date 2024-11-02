@@ -11,7 +11,7 @@ app.use(express.json());
 // Configura CORS per permettere richieste da localhost e dal dominio di Vercel
 app.use(
   cors({
-    origin: ["http://localhost:8081", "https://camporapp.vercel.app"], // Sostituisci con i domini permessi
+    origin: ["http://192.168.1.26", "https://camporapp.vercel.app"], // Sostituisci con i domini permessi
   })
 );
 
