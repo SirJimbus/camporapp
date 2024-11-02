@@ -1,4 +1,6 @@
 import { Text, View } from "react-native";
+import Login from "@/components/Login";
+import Register from "@/components/Register";
 
 export default function Index() {
   return (
@@ -9,7 +11,9 @@ export default function Index() {
         alignItems: "center",
       }}
     >
-      <Text>Edit app/index.tsx to edit this screen.</Text>
+      {/* <Text>Edit app/index.tsx to edit this screen.</Text> */}
+      <Register />
+      <Login />
     </View>
   );
 }
