@@ -1,3 +1,4 @@
+import { CURRENT_SERVER_URL } from "@/utilities";
 import React, { useState } from "react";
 import { View, Text, TextInput, Button, Alert } from "react-native";
 
@@ -7,7 +8,7 @@ export default function LoginScreen(): JSX.Element {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch("http://localhost:3000/login", {
+      const response = await fetch(`${CURRENT_SERVER_URL}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),

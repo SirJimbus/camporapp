@@ -4,16 +4,23 @@ const bcrypt = require("bcrypt");
 const cors = require("cors");
 
 const app = express();
+
+// Middleware
 app.use(express.json());
-app.use(cors());
+
+// Configura CORS per permettere richieste da localhost e dal dominio di Vercel
+app.use(
+  cors({
+    origin: ["http://localhost:8081", "https://camporapp.vercel.app"], // Sostituisci con i domini permessi
+  })
+);
 
 // Connetti a MongoDB
 mongoose
   .connect(
     "mongodb+srv://fedebertola95:VBXuGNMW28uU7hFn@cluster0.gsksc.mongodb.net/",
     {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
+      // Rimuovi le opzioni deprecate
     }
   )
   .then(() => console.log("Connesso a MongoDB"))
@@ -60,6 +67,8 @@ app.post("/login", async (req, res) => {
   res.json({ success: true });
 });
 
-app.listen(3000, () => {
-  console.log("Server in ascolto su http://localhost:3000");
+// Usa la porta fornita da Render o 3000 in locale
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server in ascolto su http://localhost:${PORT}`);
 });
