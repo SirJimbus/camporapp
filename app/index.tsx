@@ -1,19 +1,10 @@
-import { Text, View } from "react-native";
-import Login from "@/components/Login";
-import Register from "@/components/Register";
+import { View } from "react-native";
+import UserAccess from "@/components/UserAccess";
 
 export default function Index() {
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      {/* <Text>Edit app/index.tsx to edit this screen.</Text> */}
-      <Register />
-      <Login />
+    <View style={{ padding: 20 }}>
+      <UserAccess />
     </View>
   );
 }
