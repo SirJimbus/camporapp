@@ -1,0 +1,46 @@
+import React, { useState } from "react";
+import { View, Text, TextInput, Button, Alert } from "react-native";
+
+export default function RegisterScreen(): JSX.Element {
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+
+  const handleRegister = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
+      });
+
+      const data = await response.json();
+      if (data.success) {
+        Alert.alert("Registrazione completata!");
+      } else {
+        Alert.alert("Errore", data.message || "Registrazione fallita");
+      }
+    } catch (error) {
+      console.error(error);
+      Alert.alert("Errore", "Errore di connessione al server");
+    }
+  };
+
+  return (
+    <View style={{ flex: 1, justifyContent: "center", padding: 16 }}>
+      <Text>Nome utente:</Text>
+      <TextInput
+        value={username}
+        onChangeText={setUsername}
+        style={{ borderWidth: 1, padding: 8, marginBottom: 16 }}
+      />
+      <Text>Password:</Text>
+      <TextInput
+        value={password}
+        onChangeText={setPassword}
+        secureTextEntry
+        style={{ borderWidth: 1, padding: 8, marginBottom: 16 }}
+      />
+      <Button title="Registrati" onPress={handleRegister} />
+    </View>
+  );
+}
