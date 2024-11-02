@@ -8,10 +8,11 @@ export default function LoginScreen(): JSX.Element {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch(`${CURRENT_SERVER_URL}/login`, {
+      const response = await fetch(`${CURRENT_SERVER_URL}/api/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
+        mode: "no-cors", // Debug temporaneo
       });
 
       const data = await response.json();

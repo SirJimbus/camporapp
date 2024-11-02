@@ -8,10 +8,11 @@ export default function RegisterScreen(): JSX.Element {
 
   const handleRegister = async () => {
     try {
-      const response = await fetch(`${CURRENT_SERVER_URL}/register`, {
+      const response = await fetch(`${CURRENT_SERVER_URL}/api/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
+        mode: "no-cors", // Debug temporaneo
       });
 
       const data = await response.json();
