@@ -1,10 +1,13 @@
 import { View } from "react-native";
 import HomePage from "@/components/HomePage";
+import { AuthProvider } from "./context/authContext";
 
 export default function Index() {
   return (
     <View style={{ padding: 20 }}>
-      <HomePage />
+      <AuthProvider>
+        <HomePage />
+      </AuthProvider>
     </View>
   );
 }

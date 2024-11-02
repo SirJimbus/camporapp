@@ -1,25 +1,31 @@
 import { CURRENT_SERVER_URL } from "@/utilities";
 import React, { useState } from "react";
 import { View, Text, TextInput, Button, Alert } from "react-native";
+import { useAuth } from "@/app/context/authContext";
 
-export default function RegisterScreen(): JSX.Element {
+export default function LoginScreen(): JSX.Element {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const { login } = useAuth(); // Usa login dal contesto
 
-  const handleRegister = async () => {
+  const handleLogin = async () => {
     try {
-      const response = await fetch(`${CURRENT_SERVER_URL}/register`, {
+      const response = await fetch(`${CURRENT_SERVER_URL}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
-        mode: "no-cors", // Debug temporaneo
       });
+
+      if (!response.ok) {
+        throw new Error("Errore nella risposta del server");
+      }
 
       const data = await response.json();
       if (data.success) {
-        Alert.alert("Registrazione completata!");
+        Alert.alert("Accesso riuscito!");
+        login(); // Chiama login per aggiornare lo stato a "loggato"
       } else {
-        Alert.alert("Errore", data.message || "Registrazione fallita");
+        Alert.alert("Errore", data.message || "Accesso fallito");
       }
     } catch (error) {
       console.error(error);
@@ -42,7 +48,7 @@ export default function RegisterScreen(): JSX.Element {
         secureTextEntry
         style={{ borderWidth: 1, padding: 8, marginBottom: 16 }}
       />
-      <Button title="Registrati" onPress={handleRegister} />
+      <Button title="Accedi" onPress={handleLogin} />
     </View>
   );
 }
