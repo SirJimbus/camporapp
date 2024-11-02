@@ -32,9 +32,7 @@ app.use(
 mongoose
   .connect(
     "mongodb+srv://fedebertola95:VBXuGNMW28uU7hFn@cluster0.gsksc.mongodb.net/",
-    {
-      // Rimuovi le opzioni deprecate
-    }
+    {}
   )
   .then(() => console.log("Connesso a MongoDB"))
   .catch((err) => console.error("Errore di connessione a MongoDB", err));
@@ -49,12 +47,6 @@ const User = mongoose.model("User", UserSchema);
 
 // Endpoint di registrazione
 app.post("/register", async (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*"); // Consenti a tutte le origini
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-
   const { username, password } = req.body;
 
   const userExists = await User.findOne({ username });
@@ -69,13 +61,8 @@ app.post("/register", async (req, res) => {
   res.json({ success: true });
 });
 
+// Endpoint di login
 app.post("/login", async (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*"); // Consenti a tutte le origini
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-
   const { username, password } = req.body;
 
   const user = await User.findOne({ username });
