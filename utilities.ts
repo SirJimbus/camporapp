@@ -4,7 +4,7 @@ const REMOTE_SERVER_URL = "https://camporapp.onrender.com";
 
 // Scegli quale server usare commentando una delle due righe seguenti
 //const CURRENT_SERVER_URL = LOCAL_SERVER_URL;
-const CURRENT_SERVER_URL = REMOTE_SERVER_URL;
+const CURRENT_SERVER_URL = LOCAL_SERVER_URL;
 
 // const getConfig = async () => {
 //   try {

@@ -37,10 +37,12 @@ mongoose
 // Importa le route
 const loginRoute = require("./api/login");
 const registerRoute = require("./api/register");
+const placeRoutes = require("./api/place");
 
 // Usa le route
 app.use(loginRoute);
 app.use(registerRoute);
+app.use(placeRoutes);
 
 // Porta
 const PORT = process.env.PORT || 3000;
