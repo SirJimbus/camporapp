@@ -7,15 +7,18 @@ import {
   TouchableOpacity,
   Alert,
   StyleSheet,
+  ActivityIndicator,
 } from "react-native";
 import { useAuth } from "@/app/context/authContext";
 
 export default function RegisterScreen(): JSX.Element {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false); // Stato di caricamento
   const { login } = useAuth();
 
   const handleRegister = async () => {
+    setLoading(true); // Avvia il caricamento
     try {
       const response = await fetch(`${CURRENT_SERVER_URL}/register`, {
         method: "POST",
@@ -33,12 +36,13 @@ export default function RegisterScreen(): JSX.Element {
     } catch (error) {
       console.error(error);
       Alert.alert("Errore", "Errore di connessione al server");
+    } finally {
+      setLoading(false); // Termina il caricamento
     }
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Registrati</Text>
+    <View>
       <TextInput
         placeholder="Nome utente"
         value={username}
@@ -52,21 +56,22 @@ export default function RegisterScreen(): JSX.Element {
         secureTextEntry
         style={styles.input}
       />
-      <TouchableOpacity style={styles.button} onPress={handleRegister}>
-        <Text style={styles.buttonText}>Registrati</Text>
+      <TouchableOpacity
+        style={styles.button}
+        onPress={handleRegister}
+        disabled={loading}
+      >
+        {loading ? (
+          <ActivityIndicator size="small" color="#ffffff" />
+        ) : (
+          <Text style={styles.buttonText}>Registrati</Text>
+        )}
       </TouchableOpacity>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    padding: 16,
-    backgroundColor: "#f5f5f5",
-    marginTop: 200,
-  },
   title: {
     color: "black",
     fontSize: 24,

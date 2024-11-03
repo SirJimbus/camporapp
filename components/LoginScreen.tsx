@@ -4,19 +4,21 @@ import {
   View,
   Text,
   TextInput,
-  TouchableOpacity,
   Alert,
   StyleSheet,
   Pressable,
+  ActivityIndicator,
 } from "react-native";
 import { useAuth } from "@/app/context/authContext";
 
 export default function LoginScreen(): JSX.Element {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false); // Stato per il caricamento
   const { login } = useAuth();
 
   const handleLogin = async () => {
+    setLoading(true); // Inizia il caricamento
     try {
       const response = await fetch(`${CURRENT_SERVER_URL}/login`, {
         method: "POST",
@@ -38,12 +40,13 @@ export default function LoginScreen(): JSX.Element {
     } catch (error) {
       console.error(error);
       Alert.alert("Errore", "Errore di connessione al server");
+    } finally {
+      setLoading(false); // Termina il caricamento
     }
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Accedi</Text>
+    <View>
       <TextInput
         placeholder="Nome utente"
         value={username}
@@ -57,28 +60,22 @@ export default function LoginScreen(): JSX.Element {
         secureTextEntry
         style={styles.input}
       />
-      <Pressable onPress={handleLogin} style={styles.buttonContainer}>
-        <Text style={styles.buttonText}>Accedi</Text>
+      <Pressable
+        onPress={handleLogin}
+        style={styles.buttonContainer}
+        disabled={loading}
+      >
+        {loading ? (
+          <ActivityIndicator size="small" color="#ffffff" />
+        ) : (
+          <Text style={styles.buttonText}>Accedi</Text>
+        )}
       </Pressable>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  buttonContainer: {
-    backgroundColor: "#007BFF",
-    paddingVertical: 12,
-    borderRadius: 8,
-    alignItems: "center",
-    marginTop: 16,
-  },
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    padding: 16,
-    backgroundColor: "#f5f5f5",
-    marginTop: 50,
-  },
   title: {
     marginTop: 50,
     color: "black",
@@ -95,14 +92,15 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     backgroundColor: "#fff",
   },
-  button: {
+  buttonContainer: {
     backgroundColor: "#007BFF",
     paddingVertical: 12,
     borderRadius: 8,
     alignItems: "center",
+    marginTop: 16,
   },
   buttonText: {
-    color: "black",
+    color: "#ffffff",
     fontSize: 16,
     fontWeight: "bold",
   },
